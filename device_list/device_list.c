@@ -20,6 +20,7 @@ int main(int argc, char **argv){
   PaError error_code;
   PaDeviceIndex number_dev;
   PaDeviceInfo *devices;
+  int i;
 
   printf("PortAudio practice - show devices\n");
 
@@ -35,6 +36,13 @@ int main(int argc, char **argv){
   #ifndef NDEBUG
   printf("There're %d device(s) available\n", number_dev);
   #endif
+
+
+  /* Show devices info */
+  for(i=0; i<number_dev; ++i){
+    devices = Pa_GetDeviceInfo( (PaDeviceIndex)i );
+    printf("#%d:\t%s\n", i, devices->name);
+  }
 
 
   return EXIT_SUCCESS;
