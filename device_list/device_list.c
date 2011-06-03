@@ -13,13 +13,13 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<portaudio.h>
 
 
 int main(int argc, char **argv){
   PaError error_code;
   PaDeviceIndex number_dev;
-  PaDeviceInfo *devices;
   int i;
 
   printf("PortAudio practice - show devices\n");
@@ -37,13 +37,27 @@ int main(int argc, char **argv){
   printf("There're %d device(s) available\n", number_dev);
   #endif
 
+  #ifndef NDEBUG
+  printf("Size of PaDeviceInfo: %d\n", sizeof(PaDeviceInfo));
+  #endif
 
-  /* Show devices info */
+
+  /* get devices info */
   for(i=0; i<number_dev; ++i){
-    devices = Pa_GetDeviceInfo( (PaDeviceIndex)i );
-    printf("#%d:\t%s\n", i, devices->name);
-  }
+    const PaDeviceInfo *info_dev  = Pa_GetDeviceInfo( (PaDeviceIndex)i );
+    const PaHostApiInfo *info_api = Pa_GetHostApiInfo(info_dev->hostApi);
 
+    printf("Device #%d\n", i);
+    printf("Struct Version: %d\n", info_dev->structVersion);
+    printf("Device Name: %s\n", info_dev->name);
+    printf("Host API Name: %s\n", info_api->name);
+    printf("Max Inputs: %d\n", info_dev->maxInputChannels);
+    printf("Max Outputs: %d\n", info_dev->maxOutputChannels);
+    printf("Default Sample Rates: %lf\n", info_dev->defaultSampleRate);
+
+    printf("\n");
+  }
+ 
 
   /* Terminate PortAudio */
   Pa_Terminate();
