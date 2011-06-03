@@ -30,7 +30,7 @@ int main(int argc, char **argv){
 
   
   /* count how many devices available */
-  printf("Inspecting how any devices.\n");
+  printf("Inspecting how many devices available.\n");
   number_dev = Pa_GetDeviceCount();
 
   #ifndef NDEBUG
