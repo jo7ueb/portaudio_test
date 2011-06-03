@@ -45,5 +45,9 @@ int main(int argc, char **argv){
   }
 
 
+  /* Terminate PortAudio */
+  Pa_Terminate();
+
+
   return EXIT_SUCCESS;
 }
