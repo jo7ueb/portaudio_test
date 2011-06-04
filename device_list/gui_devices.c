@@ -128,3 +128,35 @@ static void destroy_dev_info(){
 
   free(g_devices);
 }
+
+
+
+
+/* Generate label text for g_label_info */
+static void set_label_text(int id_dev){
+  #ifndef NDEBUG
+  printf("set_label_text() called with id_dev = %d\n", id_dev);
+  #endif
+
+  snprintf(g_label_info, 2047,
+	   "Device ID: %d\n\
+Device Name: %s\n\
+Host API Name: %s\n\
+Max Input Channels: %d\n\
+Max OutputChannels: %d\n\
+Default Sample Rate: %lf [Hz]\n\
+Default High Input Latency: %lf [ms]\n\
+Default Low Input Latency: %lf [ms]\n\
+Default High Output Latency: %lf [ms]\n\
+Default Low Output Latency: %lf [ms]\n",
+	   id_dev,
+	   g_devices[id_dev].name_dev,
+	   g_devices[id_dev].name_api,
+	   g_devices[id_dev].max_inputs,
+	   g_devices[id_dev].max_outputs,
+	   g_devices[id_dev].sample_rate,
+	   g_devices[id_dev].high_input_latency,
+	   g_devices[id_dev].low_input_latency,
+	   g_devices[id_dev].high_output_latency,
+	   g_devices[id_dev].low_output_latency);
+}
