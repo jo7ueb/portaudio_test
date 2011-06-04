@@ -17,3 +17,29 @@
 #include<string.h>
 #include<portaudio.h>
 #include<gtk/gtk.h>
+
+
+
+
+/* Structure store information
+ * about devices
+ */
+typedef struct{
+  PaDeviceIndex id_dev;
+  PaHostApiIndex id_api;
+
+  char *name_dev;
+  char *name_api;
+
+  int max_inputs;
+  int max_outputs;
+
+  double low_input_latency;
+  double high_input_latency;
+  double low_output_latency;
+  double high_output_latency;
+
+  double sample_rate;
+} DevInfo;
+#define SIZE_DEVINFO (sizeof(DevInfo))
+#define SIZE_DEVINFO_P (sizeof(DevInfo *))
