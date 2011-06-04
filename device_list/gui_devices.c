@@ -106,3 +106,18 @@ static void get_dev_info(){
     #endif
   }
 }
+
+
+
+
+/* Destroy info of devices */
+static void destroy_dev_info(){
+  int i;
+
+  for(i=0; i<g_num_dev; ++i){
+    free(g_devices[i].name_dev);
+    free(g_devices[i].name_api);
+  }
+
+  free(g_devices);
+}
