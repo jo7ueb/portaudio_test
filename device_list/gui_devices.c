@@ -43,3 +43,11 @@ typedef struct{
 } DevInfo;
 #define SIZE_DEVINFO (sizeof(DevInfo))
 #define SIZE_DEVINFO_P (sizeof(DevInfo *))
+
+
+
+
+/* Global variables */
+static char g_labelInfo[2048];
+static int g_num_dev;
+static Devinfo *g_devices = NULL;
