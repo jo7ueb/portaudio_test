@@ -49,7 +49,7 @@ typedef struct{
 /* Global variables */
 static char g_labelInfo[2048];
 static int g_num_dev;
-static Devinfo *g_devices = NULL;
+static DevInfo *g_devices = NULL;
 
 
 
@@ -96,7 +96,7 @@ static void get_dev_info(){
     g_devices[i].high_output_latency = info_dev->defaultHighOutputLatency * 1000.0;
     g_devices[i].low_output_latency = info_dev->defaultLowOutputLatency * 1000.0;
 
-    g.devices[i].sample_rate = info_dev->defaultSampleRate;
+    g_devices[i].sample_rate = info_dev->defaultSampleRate;
 
     strcpy(g_devices[i].name_dev, info_dev->name);
     strcpy(g_devices[i].name_api, info_api->name);
