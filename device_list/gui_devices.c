@@ -7,7 +7,8 @@
  **********************************************/
 
 /* If you don't want to generate debug codes,
- * uncomment NDEBUG macro below.
+ * uncomment NDEBUG macro below,
+ * or compile with -DNDEBUG option.
  */
 //#define NDEBUG
 
