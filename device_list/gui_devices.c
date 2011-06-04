@@ -26,7 +26,6 @@
  */
 typedef struct{
   PaDeviceIndex id_dev;
-  PaHostApiIndex id_api;
 
   char *name_dev;
   char *name_api;
