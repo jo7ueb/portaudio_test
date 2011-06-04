@@ -15,3 +15,5 @@ PortAudio ライブラリの使用方法の研究
 
 [About device_list]
 とりあえず、すべてのデバイス一覧でもとってみるテスト。
+- device_list.c: デバイスの一覧をとって、コンソールへ出力。
+- gui_devices.c: ↑の GUI 版。
