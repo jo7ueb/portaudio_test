@@ -21,6 +21,13 @@
 
 
 
+/* Important macros */
+#define APP_NAME "GTK Show Audio Devices"
+#define APP_VER "1.0"
+
+
+
+
 /* Structure store information
  * about devices
  */
