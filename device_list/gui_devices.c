@@ -54,7 +54,7 @@ typedef struct{
 
 
 /* Global variables */
-static char g_labelInfo[2048];
+static char g_label_info[2048];
 static int g_num_dev;
 static DevInfo *g_devices = NULL;
 
