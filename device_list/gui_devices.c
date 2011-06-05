@@ -160,3 +160,132 @@ Default Low Output Latency: %lf [ms]\n",
 	   g_devices[id_dev].high_output_latency,
 	   g_devices[id_dev].low_output_latency);
 }
+
+
+
+
+/* callback for combo_select */
+static void cb_combo_changed(GtkComboBox *cbox, GtkLabel *label){
+  int nr = gtk_combo_box_get_active(cbox);
+
+  #ifndef NDEBUG
+  printf("cb_combo_changed() received %d.\n\n", nr);
+  #endif
+
+  set_label_text(nr);
+  gtk_label_set_text(label, g_label_info);
+}
+
+
+
+
+/* callback for button_about */
+static void cb_about_dialog(GtkButton *button, gpointer data){
+  GtkWidget *dialog_about;
+
+  dialog_about = gtk_about_dialog_new();
+  gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog_about), APP_NAME);
+  gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog_about), APP_VER);
+  gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog_about),
+			       "http://twitter.com/jo7ueb");
+  gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog_about),
+				"This program lists all available audio devices.");
+  gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog_about),
+				 "Copyright (C) 2011 Yasunori Endo \
+All Rights Reserved");
+
+  gtk_widget_show_all(dialog_about);
+}
+
+
+
+
+/* main function */
+int main(int argc, char **argv){
+  GtkWidget *window;
+  GtkWidget *vbox;
+  GtkWidget *hbox_upper, *hbox_lower;
+  GtkWidget *label_info, *label_prompt;
+  GtkWidget *combo_select;
+  GtkWidget *button_about, *button_close;
+
+  int i;
+  PaDeviceIndex default_input;
+
+
+  /* Initialize API*/
+  gtk_init(&argc, &argv);
+  Pa_Initialize();
+
+  get_dev_info();
+  default_input = Pa_GetDefaultInputDevice();
+  set_label_text(default_input);
+
+
+  /* setting up for GtkWidgets */
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_widget_set_size_request(window, 500, 400);
+  gtk_window_set_title(GTK_WINDOW(window), APP_NAME);
+  gtk_container_set_border_width(GTK_CONTAINER(window), 10);
+
+  vbox = gtk_vbox_new(FALSE, 5);
+  hbox_upper = gtk_hbox_new(FALSE, 0);
+  hbox_lower = gtk_hbox_new(TRUE, 0);
+
+  label_info = gtk_label_new(g_label_info);
+  label_prompt = gtk_label_new("Choose device ID:");
+
+  button_about = gtk_button_new_with_label("About");
+  button_close = gtk_button_new_with_label("Quit");
+
+  combo_select = gtk_combo_box_new_text();
+  for(i=0; i<g_num_dev; ++i){
+    char number[3];
+    snprintf(number, 2, "%d", i);
+
+    gtk_combo_box_append_text(GTK_COMBO_BOX(combo_select), number);
+  }
+  gtk_combo_box_set_active(GTK_COMBO_BOX(combo_select), default_input);
+
+
+  /* packing widgets into window */
+  gtk_container_add(GTK_CONTAINER(window), vbox);
+
+  gtk_box_pack_start(GTK_BOX(hbox_upper), label_prompt, FALSE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox_upper), combo_select, FALSE, TRUE, 0);
+
+  gtk_box_pack_start(GTK_BOX(hbox_lower), button_about, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(hbox_lower), button_close, TRUE, TRUE, 0);
+
+  gtk_box_pack_start(GTK_BOX(vbox), hbox_upper, FALSE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), label_info, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), hbox_lower, FALSE, TRUE, 0);
+
+
+  /* connecting to signals */
+  g_signal_connect(G_OBJECT(window), "delete-event",
+		   G_CALLBACK(gtk_main_quit), NULL);
+
+  g_signal_connect(G_OBJECT(combo_select), "changed",
+		   G_CALLBACK(cb_combo_changed), label_info);
+
+  g_signal_connect(G_OBJECT(button_about), "clicked",
+		   G_CALLBACK(cb_about_dialog), NULL);
+
+  g_signal_connect(G_OBJECT(button_close), "clicked",
+		   G_CALLBACK(gtk_main_quit), NULL);
+
+  
+  #ifndef NDEBUG
+  printf("%s\n", g_label_info);
+  #endif
+
+  gtk_widget_show_all(window);
+  gtk_main();
+
+
+  /* Terminate this program */
+  destroy_dev_info();
+  Pa_Terminate();
+  return EXIT_SUCCESS;
+}
