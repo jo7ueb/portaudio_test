@@ -194,7 +194,8 @@ static void cb_about_dialog(GtkButton *button, gpointer data){
 				 "Copyright (C) 2011 Yasunori Endo \
 All Rights Reserved");
 
-  gtk_widget_show_all(dialog_about);
+  gtk_dialog_run(GTK_DIALOG(dialog_about));
+  gtk_widget_destroy(dialog_about);
 }
 
 
