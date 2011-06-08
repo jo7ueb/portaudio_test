@@ -136,6 +136,16 @@ static void destroy_dev_info(){
 static void set_label_text(int id_dev){
   #ifndef NDEBUG
   printf("set_label_text() called with id_dev = %d\n", id_dev);
+  printf("Information about device #%d\n", id_dev);
+  printf("Device Name: %s\n", g_devices[id_dev].name_dev);
+  printf("API Name: %s\n", g_devices[id_dev].name_api);
+  printf("Max Inputs: %d\n", g_devices[id_dev].max_inputs);
+  printf("Max Outputs: %d\n", g_devices[id_dev].max_outputs);
+  printf("Sample Rate: %lf\n", g_devices[id_dev].sample_rate);
+  printf("High Input Latency: %lf\n", g_devices[id_dev].high_input_latency);
+  printf("Low Input Latency: %lf\n", g_devices[id_dev].low_input_latency);
+  printf("High Output Latency: %lf\n", g_devices[id_dev].high_output_latency);
+  printf("Low Output Latency: %lf\n", g_devices[id_dev].low_output_latency);
   #endif
 
   snprintf(g_label_info, 2047,
